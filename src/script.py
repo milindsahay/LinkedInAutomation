@@ -17,9 +17,9 @@ chromedriver_path = "../../ChromeDriver/chromedriver"
 browser = webdriver.Chrome(chromedriver_path)
 
 
-def check_exists_by_class(class_name):
+def check_exists_by_selector(selector):
     try:
-        element = browser.find_element_by_class_name(class_name)
+        element = browser.find_element_by_css_selector(selector)
     except NoSuchElementException:
         return False
     return element
@@ -29,7 +29,7 @@ def login_to_linkedin(browser):
     browser.get(website_url)
     login_button = browser.find_element_by_class_name('nav__button-secondary')
     login_button.click()
-    sleep(2)
+    sleep(1)
     username = browser.find_element_by_id("username")
     username.send_keys(USERNAME)
 
@@ -42,10 +42,9 @@ def login_to_linkedin(browser):
 
 def open_invitations(browser):
     browser.find_element_by_id("ember24").click()
-    all_invitations = check_exists_by_class("ember-view mn-invitations-preview__manage-all artdeco-button artdeco-button--tertiary  artdeco-button--muted artdeco-button--2")
-
-    print(all_invitations)
-    if all_invitations != False:
+    sleep(1)
+    all_invitations = check_exists_by_selector(".ember-view.mn-invitations-preview__manage-all.artdeco-button.artdeco-button--tertiary.artdeco-button--muted.artdeco-button--2")
+    if all_invitations:
         all_invitations.click()
 
 
